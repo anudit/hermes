@@ -1,0 +1,27 @@
+{
+  "name": "hermes",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "chain": "ganache-cli",
+    "build": "truffle compile",
+    "deploy": "truffle deploy",
+    "deploy-prod": "truffle deploy --network mumbai",
+    "test": "truffle test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/anudit/hermes.git"
+  },
+  "author": "Anudit Nagar",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/anudit/hermes/issues"
+  },
+  "homepage": "https://github.com/anudit/hermes#readme",
+  "dependencies": {
+    "@openzeppelin/contracts": "^3.3.0-solc-0.7",
+    "@truffle/hdwallet-provider": "^1.2.0"
+  }
+}
