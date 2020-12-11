@@ -17,7 +17,7 @@ import "@openzeppelin/contracts/utils/ReentrancyGuard.sol";
 contract Hermes is ERC721, PullPayment, ReentrancyGuard {
     uint256 public _tokenIds;
     uint256 public _postIds;
-    mapping(uint256 => Post) private _posts;
+    mapping(uint256 => Post) public _posts;
 
     struct Post {
         address seller;
@@ -26,6 +26,29 @@ contract Hermes is ERC721, PullPayment, ReentrancyGuard {
         bool exists;
     }
 
+    event NewPost(
+        uint256 indexed _postId,
+        address indexed _seller,
+        uint256 _price,
+        string _postData,
+        bytes32 indexed _metaData
+    );
+
+    event PostSold(
+        uint256 indexed _postId,
+        uint256 _tokenId,
+        address indexed _seller,
+        address indexed _buyer,
+        uint256 _amount
+    );
+
+    event PostPriceUpdate(
+        uint256 indexed _postId,
+        address indexed _seller,
+        uint256 _oldPrice,
+        uint256 _newPrice
+    );
+
     constructor() ERC721("Hermes", "HERMES") {}
 
     modifier postExist(uint256 id) {
@@ -33,25 +56,18 @@ contract Hermes is ERC721, PullPayment, ReentrancyGuard {
         _;
     }
 
-    function addPost(uint256 price, string memory postData) public nonReentrant() {
+    modifier onlyPostOwner(uint256 id, address _address) {
+        require(_posts[id].seller == _address, "Not your post.");
+        _;
+    }
+
+    function addPost(uint256 price, string memory postData, bytes32 metaData) public nonReentrant() {
         require(price > 0, "Price cannot be 0");
 
         _postIds++;
         _posts[_postIds] = Post(msg.sender, price, postData, true);
-    }
 
-    function getPost(uint256 id)
-        public
-        view
-        postExist(id)
-        returns (
-            uint256,
-            uint256,
-            string memory
-        )
-    {
-        Post memory post = _posts[id];
-        return (id, post.price, post.postData);
+        emit NewPost(_postIds, msg.sender, price, postData, metaData);
     }
 
     function purchasePost(uint256 postId)
@@ -69,6 +85,22 @@ contract Hermes is ERC721, PullPayment, ReentrancyGuard {
         _safeMint(msg.sender, _tokenIds);
         _setTokenURI(_tokenIds, post.postData);
         _asyncTransfer(post.seller, msg.value);
+
+        emit PostSold(postId, _tokenIds, msg.sender, post.seller, msg.value);
+    }
+
+    function updatePostPrice(uint256 postId, uint256 newPrice)
+        external
+        payable
+        postExist(postId)
+        onlyPostOwner(postId, msg.sender)
+        nonReentrant()
+    {
+        require(msg.value > 0,  "Price cannot be 0.");
+        uint256 oldprice = _posts[postId].price;
+        _posts[postId].price = newPrice;
+
+        emit PostPriceUpdate(postId, msg.sender, oldprice, newPrice);
     }
 
     function getPayments() external {
