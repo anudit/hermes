@@ -6,6 +6,7 @@ contract("Hermes", (accounts) => {
 	const tAccountTwo = accounts[1];
 	const tAccountThree = accounts[3];
 	const tTokenURI = "https://anudit.dev";
+	const tMetaData = web3.utils.fromAscii('Website');
 	const tPostIdOne = 1;
 	const tPrice100 = 100;
 	const tBid100 = 100;
@@ -27,31 +28,13 @@ contract("Hermes", (accounts) => {
 
 		// Act
 		try {
-			await contract.addPost(tPrice100, tTokenURI, { from: tAccountThree });
+			await contract.addPost(tPrice100, tTokenURI,tMetaData, { from: tAccountThree });
 		} catch (error) {
 			err = error;
 		}
 
 		// Assert
 		assert.isNull(err);
-	});
-
-	it("should get post", async () => {
-		// Arrange
-		let err = null;
-		let response = null;
-
-		// Act
-		try {
-			response = await contract.getPost(tPostIdOne);
-		} catch (error) {
-			err = error;
-		}
-
-		// Assert
-		assert.isNull(err);
-		assert.equal(Number(response[1]), tPrice100);
-		assert.equal(response[2], tTokenURI);
 	});
 
 	it("should not add post with price of zero", async () => {
@@ -60,7 +43,7 @@ contract("Hermes", (accounts) => {
 
 		// Act
 		try {
-			await contract.addPost(0, tTokenURI, { from: tAccountThree });
+			await contract.addPost(0, tTokenURI, tMetaData, { from: tAccountThree });
 		} catch (error) {
 			err = error;
 		}
