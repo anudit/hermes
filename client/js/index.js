@@ -1,7 +1,6 @@
 let HermesContract;
 
 if (window.ethereum) {
-    // window.ethereum.enable();
     window.ethereum
     .request({ method: 'eth_requestAccounts' });
     setup();
