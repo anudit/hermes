@@ -56,14 +56,19 @@
 		<div class="page__folder page__folder--dummy"></div>
 		<main class="main-wrap page__folder">
 			<header class="hermes-header">
-				<a href="./index.html" style="text-decoration: none;color:#000">
+				<div onclick="window.location.href='./index.html'">
 					<h1 class="hermes-header__title">Hermes</h1>
-				</a>
+				</div>
 				<div class="search-wrap">
-					<a class="btn btn--search" id="toggle-theme">
-						<svg xmlns="http://www.w3.org/2000/svg" width="24" height="4vh" viewBox="0 0 24 24"><path fill="#000" d="M4.069 13h-4.069v-2h4.069c-.041.328-.069.661-.069 1s.028.672.069 1zm3.034-7.312l-2.881-2.881-1.414 1.414 2.881 2.881c.411-.529.885-1.003 1.414-1.414zm11.209 1.414l2.881-2.881-1.414-1.414-2.881 2.881c.528.411 1.002.886 1.414 1.414zm-6.312-3.102c.339 0 .672.028 1 .069v-4.069h-2v4.069c.328-.041.661-.069 1-.069zm0 16c-.339 0-.672-.028-1-.069v4.069h2v-4.069c-.328.041-.661.069-1 .069zm7.931-9c.041.328.069.661.069 1s-.028.672-.069 1h4.069v-2h-4.069zm-3.033 7.312l2.88 2.88 1.415-1.414-2.88-2.88c-.412.528-.886 1.002-1.415 1.414zm-11.21-1.415l-2.88 2.88 1.414 1.414 2.88-2.88c-.528-.411-1.003-.885-1.414-1.414zm2.312-4.897c0 2.206 1.794 4 4 4s4-1.794 4-4-1.794-4-4-4-4 1.794-4 4zm10 0c0 3.314-2.686 6-6 6s-6-2.686-6-6 2.686-6 6-6 6 2.686 6 6z"/></svg>
+					<a class="btn btn--search" id="toggle-theme" onclick="toggleDarkTheme()">
+						<svg xmlns="http://www.w3.org/2000/svg" width="24" height="4vh" viewBox="0 0 24 24"><path id="light-icon-fill" fill="#000" d="M4.069 13h-4.069v-2h4.069c-.041.328-.069.661-.069 1s.028.672.069 1zm3.034-7.312l-2.881-2.881-1.414 1.414 2.881 2.881c.411-.529.885-1.003 1.414-1.414zm11.209 1.414l2.881-2.881-1.414-1.414-2.881 2.881c.528.411 1.002.886 1.414 1.414zm-6.312-3.102c.339 0 .672.028 1 .069v-4.069h-2v4.069c.328-.041.661-.069 1-.069zm0 16c-.339 0-.672-.028-1-.069v4.069h2v-4.069c-.328.041-.661.069-1 .069zm7.931-9c.041.328.069.661.069 1s-.028.672-.069 1h4.069v-2h-4.069zm-3.033 7.312l2.88 2.88 1.415-1.414-2.88-2.88c-.412.528-.886 1.002-1.415 1.414zm-11.21-1.415l-2.88 2.88 1.414 1.414 2.88-2.88c-.528-.411-1.003-.885-1.414-1.414zm2.312-4.897c0 2.206 1.794 4 4 4s4-1.794 4-4-1.794-4-4-4-4 1.794-4 4zm10 0c0 3.314-2.686 6-6 6s-6-2.686-6-6 2.686-6 6-6 6 2.686 6 6z"/></svg>
 					</a>
-					<button id="btn-search" class="btn btn--search"><svg class="icon icon--search"><use xlink:href="#icon-search"></use></svg></button>
+					<button id="btn-search" class="btn btn--search">
+						<svg class="icon icon--search">
+							<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+							<path id="search-icon-fill" fill="#000" d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
+						</symbol></svg>
+					</button>
 				</div>
 			</header>
 			<div class="content">
@@ -71,179 +76,6 @@
 					<h1 id='search-query'>Let's explore</h1>
 				</div>
 				<div class="grid">
-					<!--
-					<div class="grid__item" data-size="1280x857">
-						<a href="img/original/6.jpg" class="img-wrap"><img src="img/thumbs/6.jpg" alt="img06" />
-							<div class="description description--grid">
-								<h3>Mother's Love</h3>
-								<p>Every time you drink a glass of milk or eat a piece of cheese, you harm a mother. Please go vegan. <em>&mdash; Gary L. Francione</em></p>
-								<div class="details">
-									<ul>
-										<li><i class="icon icon-camera"></i><span>Canon PowerShot S95</span></li>
-										<li><i class="icon icon-focal_length"></i><span>22.5mm</span></li>
-										<li><i class="icon icon-aperture"></i><span>&fnof;/5.6</span></li>
-										<li><i class="icon icon-exposure_time"></i><span>1/1000</span></li>
-										<li><i class="icon icon-iso"></i><span>80</span></li>
-									</ul>
-								</div>
-							</div>
-						</a>
-					</div>
-					<div class="grid__item" data-size="1280x1280">
-						<a href="img/original/7.jpg" class="img-wrap"><img src="img/thumbs/7.jpg" alt="img07" />
-							<div class="description description--grid">
-								<h3>Silent Killer</h3>
-								<p>Cows’ milk protein may be the single most significant chemical carcinogen to which humans are exposed. <em>&mdash; T. Colin Campbell</em></p>
-								<div class="details">
-									<ul>
-										<li><i class="icon"></i><span>Canon PowerShot S95</span></li>
-										<li><i class="icon"></i><span>22.5mm</span></li>
-										<li><i class="icon"></i><span>&fnof;/5.6</span></li>
-										<li><i class="icon"></i><span>1/1000</span></li>
-										<li><i class="icon"></i><span>80</span></li>
-									</ul>
-								</div>
-							</div>
-						</a>
-					</div>
-					<div class="grid__item" data-size="1280x853">
-						<a href="img/original/8.jpg" class="img-wrap"><img src="img/thumbs/8.jpg" alt="img08" />
-							<div class="description description--grid">
-								<h3>Senseless Suffering</h3>
-								<p>The question is not, 'Can they reason?' nor, 'Can they talk?' but rather, 'Can they suffer?' <em>&mdash; Jeremy Bentham</em></p>
-								<div class="details">
-									<ul>
-										<li><i class="icon icon-camera"></i><span>Canon PowerShot S95</span></li>
-										<li><i class="icon icon-focal_length"></i><span>22.5mm</span></li>
-										<li><i class="icon icon-aperture"></i><span>&fnof;/5.6</span></li>
-										<li><i class="icon icon-exposure_time"></i><span>1/1000</span></li>
-										<li><i class="icon icon-iso"></i><span>80</span></li>
-									</ul>
-								</div>
-							</div>
-						</a>
-					</div>
-					<div class="grid__item" data-size="865x1280">
-						<a href="img/original/9.jpg" class="img-wrap"><img src="img/thumbs/9.jpg" alt="img09" />
-							<div class="description description--grid">
-								<h3>Rabbit Intelligence</h3>
-								<p>If a rabbit defined intelligence the way man does, then the most intelligent animal would be a rabbit, followed by the animal most willing to obey the commands of a rabbit. <em>&mdash; Robert Brault</em></p>
-								<div class="details">
-									<ul>
-										<li><i class="icon icon-camera"></i><span>Canon PowerShot S95</span></li>
-										<li><i class="icon icon-focal_length"></i><span>22.5mm</span></li>
-										<li><i class="icon icon-aperture"></i><span>&fnof;/5.6</span></li>
-										<li><i class="icon icon-exposure_time"></i><span>1/1000</span></li>
-										<li><i class="icon icon-iso"></i><span>80</span></li>
-									</ul>
-								</div>
-							</div>
-						</a>
-					</div>
-					<div class="grid__item" data-size="1280x1280">
-						<a href="img/original/10.jpg" class="img-wrap"><img src="img/thumbs/10.jpg" alt="img10" />
-							<div class="description description--grid">
-								<h3>Friendly Terms</h3>
-								<p>Man is the only animal that can remain on friendly terms with the victims he intends to eat until he eats them. <em>&mdash; Samuel Butler</em></p>
-								<div class="details">
-									<ul>
-										<li><i class="icon icon-camera"></i><span>Canon PowerShot S95</span></li>
-										<li><i class="icon icon-focal_length"></i><span>22.5mm</span></li>
-										<li><i class="icon icon-aperture"></i><span>&fnof;/5.6</span></li>
-										<li><i class="icon icon-exposure_time"></i><span>1/1000</span></li>
-										<li><i class="icon icon-iso"></i><span>80</span></li>
-									</ul>
-								</div>
-							</div>
-						</a>
-					</div>
-					<div class="grid__item" data-size="1280x850">
-						<a href="img/original/11.jpg" class="img-wrap"><img src="img/thumbs/11.jpg" alt="img11" />
-							<div class="description description--grid">
-								<h3>Murder of Men</h3>
-								<p>The time will come when men such as I will look upon the murder of animals as they now look upon the murder of men.<em>&mdash; Leonardo Da Vinci</em></p>
-								<div class="details">
-									<ul>
-										<li><i class="icon icon-camera"></i><span>Canon PowerShot S95</span></li>
-										<li><i class="icon icon-focal_length"></i><span>22.5mm</span></li>
-										<li><i class="icon icon-aperture"></i><span>&fnof;/5.6</span></li>
-										<li><i class="icon icon-exposure_time"></i><span>1/1000</span></li>
-										<li><i class="icon icon-iso"></i><span>80</span></li>
-									</ul>
-								</div>
-							</div>
-						</a>
-					</div>
-					<div class="grid__item" data-size="1280x853">
-						<a href="img/original/1.jpg" class="img-wrap"><img src="img/thumbs/1.jpg" alt="img01" />
-							<div class="description description--grid">
-								<h3>Highest Ethics</h3>
-								<p>Non-violence leads to the highest ethics, which is the goal of all evolution. Until we stop harming all other living beings, we are still savages <em>&mdash; Thomas Edison</em></p>
-								<div class="details">
-									<ul>
-										<li><i class="icon icon-camera"></i><span>Canon PowerShot S95</span></li>
-										<li><i class="icon icon-focal_length"></i><span>22.5mm</span></li>
-										<li><i class="icon icon-aperture"></i><span>&fnof;/5.6</span></li>
-										<li><i class="icon icon-exposure_time"></i><span>1/1000</span></li>
-										<li><i class="icon icon-iso"></i><span>80</span></li>
-									</ul>
-								</div>
-							</div>
-						</a>
-					</div>
-					<div class="grid__item" data-size="958x1280">
-						<a href="img/original/2.jpg" class="img-wrap"><img src="img/thumbs/2.jpg" alt="img02" />
-							<div class="description description--grid">
-								<h3>Pleasure, Amusement &amp; Convenience</h3>
-								<p>We do not need to eat animals, wear animals, or use animals for entertainment purposes, and our only defense of these uses is our pleasure, amusement, and convenience.<em>&mdash; Gary L. Francione</em></p>
-								<div class="details">
-									<ul>
-										<li><i class="icon icon-camera"></i><span>Canon PowerShot S95</span></li>
-										<li><i class="icon icon-focal_length"></i><span>22.5mm</span></li>
-										<li><i class="icon icon-aperture"></i><span>&fnof;/5.6</span></li>
-										<li><i class="icon icon-exposure_time"></i><span>1/1000</span></li>
-										<li><i class="icon icon-iso"></i><span>80</span></li>
-									</ul>
-								</div>
-							</div>
-						</a>
-					</div>
-					<div class="grid__item" data-size="837x1280">
-						<a href="img/original/3.jpg" class="img-wrap"><img src="img/thumbs/3.jpg" alt="img03" />
-							<div class="description description--grid">
-								<h3>Dinner</h3>
-								<p>We all love animals. Why do we call some 'pets' and others 'dinner'? <em>&mdash; K.D. Lang</em></p>
-								<div class="details">
-									<ul>
-										<li><i class="icon icon-camera"></i><span>Canon PowerShot S95</span></li>
-										<li><i class="icon icon-focal_length"></i><span>22.5mm</span></li>
-										<li><i class="icon icon-aperture"></i><span>&fnof;/5.6</span></li>
-										<li><i class="icon icon-exposure_time"></i><span>1/1000</span></li>
-										<li><i class="icon icon-iso"></i><span>80</span></li>
-									</ul>
-								</div>
-							</div>
-						</a>
-					</div>
-					<div class="grid__item" data-size="1280x961">
-						<a href="img/original/4.jpg" class="img-wrap"><img src="img/thumbs/4.jpg" alt="img04" />
-							<div class="description description--grid">
-								<h3>Appetite or Suffering?</h3>
-								<p>Could you look an animal in the eyes and say to it, 'My appetite is more important than your suffering'? <em>&mdash; Moby</em></p>
-								<div class="details">
-									<ul>
-										<li><i class="icon icon-camera"></i><span>Canon PowerShot S95</span></li>
-										<li><i class="icon icon-focal_length"></i><span>22.5mm</span></li>
-										<li><i class="icon icon-aperture"></i><span>&fnof;/5.6</span></li>
-										<li><i class="icon icon-exposure_time"></i><span>1/1000</span></li>
-										<li><i class="icon icon-iso"></i><span>80</span></li>
-									</ul>
-								</div>
-							</div>
-						</a>
-					</div>
-					-->
-
 				</div>
 
 				<div class="preview">

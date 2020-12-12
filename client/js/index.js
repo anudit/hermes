@@ -17,8 +17,7 @@ function setup(){
     document.querySelector(".search__input").addEventListener("keyup", function(event) {
         // Number 13 is the "Enter" key on the keyboard
         event.preventDefault();
-        console.log('he')
-        if (event.keyCode === 13) {
+        if (event.key == 'Enter') {
           window.location.href = `./index.html?search=${document.querySelector(".search__input").value}`
         }
       });
@@ -72,8 +71,7 @@ async function getPostsbyString(query = '', limit = 15){
         .then((events) => {
             let validEvents = []
             for(var i=0;i < Math.min(events.length, limit); i++){
-                console.log(cleanNewPostEvent(events[i]).metaData.toLowerCase())
-                if (cleanNewPostEvent(events[i]).metaData.toLowerCase().includes(query)){
+                if (cleanNewPostEvent(events[i]).metaData.toLowerCase().includes(query.toLowerCase())){
                     validEvents.push(cleanNewPostEvent(events[i]));
                 }
             }
@@ -110,4 +108,18 @@ function getParameterByName(name) {
 
 function openExp(add){
     window.open('https://explorer-mumbai.maticvigil.com/address/'+add, '_blank');
+}
+
+function toggleDarkTheme(add){
+    if(document.querySelector('.main-wrap').classList.contains('dark') === true){
+        document.querySelector('.main-wrap').classList.remove('dark');
+        document.querySelector('#search-icon-fill').setAttribute('fill', '#000');
+        document.querySelector('#light-icon-fill').setAttribute('fill', '#000');
+    }
+    else{
+        document.querySelector('.main-wrap').classList.add('dark');
+        document.querySelector('#search-icon-fill').setAttribute('fill', '#fff');
+        document.querySelector('#light-icon-fill').setAttribute('fill', '#fff');
+
+    }
 }
