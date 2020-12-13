@@ -4,7 +4,7 @@
 	box-sizing: border-box;
 }
 
-@font-face {
+/* @font-face {
 	font-family: "PTSerif";
 	src: url("../fonts/PTSerif-Regular.ttf") format("truetype");
 	font-weight: normal;
@@ -30,11 +30,25 @@
 	src: url("../fonts/PTSerif-BoldItalic.ttf") format("truetype");
 	font-weight: bold;
 	font-style: italic;
-  }
+  } */
+
+@font-face {
+	font-family: 'Swear Variable';
+	src: url('../fonts/SwearRomanVariable.woff2') format("woff2-variations");
+	font-style: normal;
+	font-weight: 1 999;
+}
+@font-face {
+	font-family: 'Swear Variable';
+	src: url('../fonts/SwearItalicVariable.woff2') format("woff2-variations");
+	font-style: italic;
+	font-weight: 1 999;
+}
 
 body {
-	font-family: 'PTSerif', 'Times New Roma', serif;
+	font-family: 'Swear Variable', 'Times New Roma', serif;
 	background-color: #0f0044;
+	font-variation-settings: "opsz" 1000 !important;
 }
 
 .dark {
@@ -47,6 +61,19 @@ body {
 	justify-content: center;
 	font-weight: bolder;
 	font-size: 2vw;
+}
+
+#search-query {
+	text-transform: capitalize;
+    width: 80%;
+    text-align: center;
+	font-size: 5vw;
+	margin: 0.3em 0;
+}
+
+#search-query:hover {
+	font-weight: 999;
+	animation: ease-in;
 }
 
 .rainbow {
@@ -101,7 +128,7 @@ button:focus {
 }
 
 .content {
-	padding: 1em 0 3em;
+	padding: 0em 0 3em;
 	width: 100%;
 	max-width: 1080px;
 	margin: 0 auto;
@@ -163,11 +190,22 @@ button:focus {
 
 .hermes-header__title {
 	font-size: 2em;
-	font-weight: 100;
+	font-weight: 400;
     font-style: italic;
 	margin: 0;
 	padding: 0 0.75em;
 }
+
+.hermes-header__title:hover {
+	font-weight: 900;
+	background-image: -webkit-linear-gradient(92deg,#4158D0, #C850C0, #FFCC70);
+	background-clip: text;
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+	animation: hue 10s infinite linear;
+	-webkit-animation: hue 10s infinite linear;
+}
+
 
 .hermes-header__side,
 .search-wrap {
