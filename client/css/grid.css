@@ -193,6 +193,8 @@
 	margin: 0;
 	padding: 0;
 	list-style: none;
+	font-variation-settings: "opsz" 0 !important;
+	font-size: 40px;
 }
 
 .details ul li {
@@ -303,7 +305,7 @@
 
 @media screen and (max-width: 40em) {
 	.description--preview h3 {
-		font-size: 0.5em;
+		font-size: 0.7em;
 	}
 	.description--preview p,
 	.details {

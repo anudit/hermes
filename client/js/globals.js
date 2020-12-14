@@ -664,4 +664,4 @@ const contractABI = [
 ];
 
 const contractAddress = '0x0DaB3b1a52d72c078Fff7f55f69190Db0b46aCf4';
-const contractBlockNumber = '7917378';
+const contractBlockNumber = 7917378;

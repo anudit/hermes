@@ -1,4 +1,6 @@
-let HermesContract;
+let maticMumbaiProvider = new ethers.providers.JsonRpcProvider('https://rpc-mumbai.matic.today');
+let HC_interface = new ethers.utils.Interface(contractABI);
+let HermesContract = new ethers.Contract(contractAddress, contractABI, maticMumbaiProvider);
 
 setup();
 
@@ -10,10 +12,7 @@ setup();
 // }
 
 function setup(){
-    window.web3 = new Web3(new Web3.providers.HttpProvider('https://rpc-mumbai.matic.today'));
-    HermesContract = new web3.eth.Contract(contractABI, contractAddress);
     setupPostsUI();
-
     document.querySelector(".search__input").addEventListener("keyup", function(event) {
         // Number 13 is the "Enter" key on the keyboard
         event.preventDefault();
@@ -37,15 +36,15 @@ async function setupPostsUI(){
         posts.forEach(post => {
             document.querySelector('.grid').innerHTML += `
                 <div class="grid__item" data-size="1280x857">
-                    <a href="https://gateway.pinata.cloud/ipfs/${post.postData}" class="img-wrap">
-                        <img src="https://gateway.pinata.cloud/ipfs/${post.postData}" alt="img06" />
+                    <a href="https://gateway.pinata.cloud/ipfs/${post._postData}" class="img-wrap">
+                        <img src="https://gateway.pinata.cloud/ipfs/${post._postData}" alt="img06" />
                         <div class="description description--grid">
-                            <h3>${post.metaData}</h3>
+                            <h3>#${post._postId.toString()} ${ethers.utils.parseBytes32String(post._metaData)}</h3>
                             <br/>
                             <div class="details">
                                 <ul>
-                                    <li><button>Purchase</button></li>
-                                    <li><button onclick="openExp('${post.seller}')">View Author</button></li>
+                                    <li><button class='hover-rainbow' onclick="purchasePost(${post._postId}, ${post._price})">Purchase for ${ethers.utils.formatEther(post._price)} ETH</button></li>
+                                    <li><button onclick="openExp('${post._seller}')">View Author</button></li>
                                 </ul>
                             </div>
                         </div>
@@ -55,6 +54,7 @@ async function setupPostsUI(){
         });
 
     }).then(()=>{
+        document.querySelector('#search-query').innerHTML = `Let's <span class="rainbow">Explore</span>`;
         setupGridSystem();
     })
 }
@@ -63,37 +63,37 @@ async function setupPostsUI(){
 async function getPostsbyString(query = '', limit = 15){
     let promise = new Promise((res, rej) => {
 
-        HermesContract.getPastEvents('NewPost', {
-            filter: {},
+        let topic = ethers.utils.id("NewPost(uint256,address,uint256,string,bytes32)");
+        let filter = {
+            address: contractAddress,
             fromBlock: contractBlockNumber,
-            toBlock: 'latest'
-        })
-        .then((events) => {
+            toBlock: 'latest',
+            topics: [topic]
+        }
+
+        maticMumbaiProvider.getLogs(filter).then((events) => {
             let validEvents = []
             for(var i=0;i < Math.min(events.length, limit); i++){
-                if (cleanNewPostEvent(events[i]).metaData.toLowerCase().includes(query.toLowerCase())){
-                    validEvents.push(cleanNewPostEvent(events[i]));
+                let decodedEventData = HC_interface.decodeEventLog(topic, events[i].data, events[i].topics);
+                try{
+                    let decodedString = ethers.utils.parseBytes32String(decodedEventData._metaData);
+                    if (decodedString.toLowerCase().includes(query.toLowerCase())){
+                        validEvents.push(decodedEventData);
+                    }
+                }
+                catch {
+                    continue;
                 }
             }
             res(validEvents);
         })
         .catch(function(error){
-           rej(error);
+            rej(error);
         });
 
     });
     let result = await promise;
     return result;
-}
-
-function cleanNewPostEvent(event){
-    return {
-        'metaData':web3.utils.toAscii(event.returnValues._metaData).trim(),
-        'postData':event.returnValues._postData,
-        'postId':event.returnValues._postId,
-        'price':web3.utils.fromWei(event.returnValues._price) + " ETH",
-        'seller':event.returnValues._seller
-    }
 }
 
 function getParameterByName(name) {
@@ -120,6 +120,42 @@ function toggleDarkTheme(add){
         document.querySelector('.main-wrap').classList.add('dark');
         document.querySelector('#search-icon-fill').setAttribute('fill', '#fff');
         document.querySelector('#light-icon-fill').setAttribute('fill', '#fff');
-
     }
 }
+
+async function purchasePost(postID, postCost){
+    if (typeof window.ethereum !== 'undefined') {
+        await ethereum.request({ method: 'eth_requestAccounts' });
+        let provider = (new ethers.providers.Web3Provider(ethereum)).getSigner();
+        let HC = new ethers.Contract(contractAddress, contractABI, provider);
+
+        await HC.purchasePost(postID,{
+            value: postCost
+        }).then(console.log).then(tx=>{
+            console.log('txn hash', tx);
+            alert(`Post ${postID} purchased!`);
+        }).catch((e)=>{
+            alert(e.message);
+        });
+    }
+    else if(typeof window.web3 !== 'undefined'){
+        await web3.currentProvider.enable()
+        let provider = (new ethers.providers.Web3Provider(web3.currentProvider)).getSigner();
+        let HC = new ethers.Contract(contractAddress, contractABI, provider);
+
+        await HC.purchasePost(postID,{
+            value: postCost
+        }).then(console.log).then(tx=>{
+            console.log('txn hash', tx);
+            alert(`Post ${postID} purchased!`);
+        }).catch((e)=>{
+            alert(e.message);
+        });
+
+    }
+    else {
+        alert('Get Metamask or a Web3 Comaptible Browser.')
+    }
+
+}
+

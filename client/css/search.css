@@ -85,6 +85,15 @@ body {
 	-webkit-animation: hue 10s infinite linear;
 }
 
+.hover-rainbow:hover {
+	background-image: -webkit-linear-gradient(92deg,#4158D0, #C850C0, #FFCC70);
+	background-clip: text;
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+	animation: hue 10s infinite linear;
+	-webkit-animation: hue 10s infinite linear;
+}
+
 @keyframes hue {
 	from {
 	  filter: hue-rotate(0deg);
