@@ -123,6 +123,16 @@ function toggleDarkTheme(add){
     }
 }
 
+function injectScript(src) {
+    return new Promise((resolve, reject) => {
+        const script = document.createElement('script');
+        script.src = src;
+        script.addEventListener('load', resolve);
+        script.addEventListener('error', e => reject(e.error));
+        document.head.appendChild(script);
+    });
+}
+
 async function purchasePost(postID, postCost){
     if (typeof window.ethereum !== 'undefined') {
         await ethereum.request({ method: 'eth_requestAccounts' });
@@ -154,8 +164,30 @@ async function purchasePost(postID, postCost){
 
     }
     else {
-        alert('Get Metamask or a Web3 Comaptible Browser.')
+
+        injectScript('https://cdn.jsdelivr.net/npm/@portis/web3@2.0.0-beta.59/umd/index.js')
+        .then(async () => {
+            console.log('Portis Injected.');
+
+            const portis = new Portis('d1c90676-4267-4747-845f-438ab42e3f6a', 'maticMumbai');
+            let provider = (new ethers.providers.Web3Provider(portis.provider)).getSigner();
+            let HC = new ethers.Contract(contractAddress, contractABI, provider);
+
+            await HC.purchasePost(postID,{
+                value: postCost
+            }).then(console.log).then(tx=>{
+                console.log('txn hash', tx);
+                alert(`Post ${postID} purchased!`);
+            }).catch((e)=>{
+                alert(e.message);
+            });
+
+        }).catch(error => {
+            console.error(error);
+        });
+
     }
 
 }
+
 
